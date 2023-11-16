@@ -1,0 +1,35 @@
+---Summary of All PPP Approved Lending
+--Note, there is also servicing Lender
+Select count(LoanNumber) as Loans_Approved, sum(InitialApprovalAmount) Total_Net_Dollars, AVG(InitialApprovalAmount) Average_Loan_Size, 
+(select count(distinct (OriginatingLender))from [dbo].[sba_public_data])Total_Originating_Lender_Count
+from [dbo].[sba_public_data]
+order by 3 desc
+
+---Summary of 2021 PPP Approved Lending
+Select count(LoanNumber) as Loans_Approved, sum(InitialApprovalAmount) Total_Net_Dollars, AVG(InitialApprovalAmount) Average_Loan_Size, 
+(select count(distinct (OriginatingLender))from [dbo].[sba_public_data] where year(DateApproved) = 2021)Total_Originating_Lender_Count
+from [dbo].[sba_public_data]
+where year(DateApproved) = 2021
+order by 3 desc
+
+---Summary of 2020 PPP Approved Lending
+Select count(LoanNumber) as Loans_Approved, sum(InitialApprovalAmount) Total_Net_Dollars, AVG(InitialApprovalAmount) Average_Loan_Size, 
+(select count(distinct (OriginatingLender))from [dbo].[sba_public_data] where year(DateApproved) = 2020)Total_Originating_Lender_Count
+from [dbo].[sba_public_data]
+where year(DateApproved) = 2020
+order by 3 desc
+
+
+---2---
+---Summary of 2021 PPP Approved Loans per Originating Lender, loan count, total amount and average
+--Top 15 Originating Lenders for 2021 PPP Loans
+--Data is ordered by Net_Dollars
+Select top 15 OriginatingLender, count(LoanNumber) as Loans_Approved, sum(InitialApprovalAmount) Net_Dollars, AVG(InitialApprovalAmount) Average_Loan_Size
+from [dbo].[sba_public_data]
+where year(DateApproved) = 2021
+group by OriginatingLender
+order by 3 desc
+
+Select top 15 OriginatingLender, count(LoanNumber) as Loans_Approved, sum(InitialApprovalAmount) Net_Dollars, AVG(InitialApprovalAmount) Average_Loan_Size
+from [dbo].[sba_public_data]
+where year(DateApproved) = 2020
